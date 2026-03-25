@@ -1,0 +1,12 @@
+# Pehle sab kuch block (ignore) kar do
+/*
+
+# Ab un files ko 'Allow' karo jo aapko chahiye (!) ka matlab hai "Don't Ignore"
+!main.py
+!plant_disease_model.pth
+!class_indices.json
+!README.md
+!.gitignore
+
+# Folders ke andar ki files ko bhi allow karne ke liye ye zaroori hai
+!*/
