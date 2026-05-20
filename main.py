@@ -8,12 +8,12 @@ from tkinter import filedialog, messagebox
 import threading
 import os
 
-# --- 1. SETTING PATHS ---
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'plant_disease_model.pth')
 JSON_PATH = os.path.join(BASE_DIR, 'class_indices.json')
 
-# Voice Setup
+
 try:
     import pyttsx3
     engine = pyttsx3.init()
@@ -27,7 +27,7 @@ def speak_result(text):
             engine.runAndWait()
         except: pass
 
-# --- 2. LOAD DATA & MODEL ---
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 if not os.path.exists(JSON_PATH):
@@ -57,7 +57,7 @@ data_transforms = transforms.Compose([
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
 
-# --- 3. DIAGNOSIS FUNCTION (Isme badlao kiya hai) ---
+
 def upload_and_diagnose():
     file_path = filedialog.askopenfilename(title="Select Plant Leaf Image")
     if not file_path: return
@@ -73,8 +73,8 @@ def upload_and_diagnose():
         
         accuracy = confidence.item() * 100
         
-        # --- NAYA LOGIC START ---
-        THRESHOLD = 80.0  # Agar 80% se kam sure hai toh mana kar do
+      
+        THRESHOLD = 80.0  
         
         if accuracy < THRESHOLD:
             result_text = "❌ Not Able to Recognize\n(Plant not in dataset or unclear photo)"
@@ -92,7 +92,7 @@ def upload_and_diagnose():
             result_text = f"Plant: {plant}\nDisease: {disease}\nAccuracy: {accuracy:.2f}%"
             voice_text = f"The plant is {plant}. The disease is {disease}."
             print(f"\n✅ Recognized: {plant} ({accuracy:.2f}%)")
-        # --- NAYA LOGIC END ---
+      
 
         print("-" * 30 + "\n" + result_text + "\n" + "-" * 30)
         threading.Thread(target=speak_result, args=(voice_text,)).start()
